@@ -1,16 +1,3 @@
-# Specify phone tech before including full_phone
-$(call inherit-product, vendor/cm/config/gsm.mk)
-
-# Release name
-PRODUCT_RELEASE_NAME := stuttgart
-
-# Boot animation
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
-
-# Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
-
 #
 # Copyright (C) 2012 The CyanogenMod Project
 #
@@ -27,43 +14,59 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # limitations under the License.
 #
 
-COMMON_PATH := device/lenovo/stuttgart
+# Specify phone tech before including full_phone
+$(call inherit-product, vendor/cm/config/gsm.mk)
 
-DEVICE_PACKAGE_OVERLAYS := $(COMMON_PATH)/overlay
+# Release name
+PRODUCT_RELEASE_NAME := stuttgart
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
+
+# Inherit some common CM stuff.
+$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+LOCAL_PATH := device/lenovo/stuttgart
+
+DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Init files
-PRODUCT_COPY_FILES := \
-#    $(COMMON_PATH)/init.bt.rc:root/init.bt.rc \
-#    $(COMMON_PATH)/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
-#    $(COMMON_PATH)/lpm.rc:root/lpm.rc \
-#    $(COMMON_PATH)/init.trace.rc:root/init.trace.rc
+#    $(LOCAL_PATH)/init.bt.rc:root/init.bt.rc \
+#    $(LOCAL_PATH)/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
+#    $(LOCAL_PATH)/lpm.rc:root/lpm.rc \
+#    $(LOCAL_PATH)/init.trace.rc:root/init.trace.rc
 #    $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
 #    $(LOCAL_PATH)/init.smdk4x12.rc:root/init.smdk4x12.rc \
-    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
-    $(LOCAL_PATH)/ueventd.smdk4x12.rc:recovery/root/ueventd.smdk4x12.rc
+PRODUCT_COPY_FILES := 
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
+    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
 
 # Vold and Storage
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/vold.fstab:system/etc/vold.fstab
+    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
 
 # Bluetooth configuration files
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/main.conf:system/etc/bluetooth/main.conf \
-    $(COMMON_PATH)/configs/audio.conf:system/etc/bluetooth/audio.conf \
-    $(COMMON_PATH)/configs/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
-    $(COMMON_PATH)/configs/blacklist.conf:system/etc/bluetooth/blacklist.conf
+    $(LOCAL_PATH)/configs/main.conf:system/etc/bluetooth/main.conf \
+    $(LOCAL_PATH)/configs/audio.conf:system/etc/bluetooth/audio.conf \
+    $(LOCAL_PATH)/configs/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
+    $(LOCAL_PATH)/configs/blacklist.conf:system/etc/bluetooth/blacklist.conf
 
 # Wifi
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+    $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
@@ -71,7 +74,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Gps
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/gps.conf:system/etc/gps.conf
+    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
 
 # Packages
 #PRODUCT_PACKAGES := \
@@ -97,8 +100,8 @@ PRODUCT_PACKAGES += \
     libOMX.SEC.M4V.Encoder
 
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(COMMON_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -146,8 +149,6 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 TARGET_HAL_PATH := hardware/samsung/exynos4/hal
 TARGET_OMX_PATH := hardware/samsung/exynos/multimedia/openmax
 $(call inherit-product, hardware/samsung/exynos4x12.mk)
-
-LOCAL_PATH := device/lenovo/stuttgart
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
