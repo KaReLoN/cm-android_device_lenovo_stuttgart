@@ -35,15 +35,16 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-# The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
-
 # Init files
-#PRODUCT_COPY_FILES := \
+PRODUCT_COPY_FILES := \
 #    $(COMMON_PATH)/init.bt.rc:root/init.bt.rc \
 #    $(COMMON_PATH)/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
 #    $(COMMON_PATH)/lpm.rc:root/lpm.rc \
 #    $(COMMON_PATH)/init.trace.rc:root/init.trace.rc
+#    $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
+#    $(LOCAL_PATH)/init.smdk4x12.rc:root/init.smdk4x12.rc \
+    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
+    $(LOCAL_PATH)/ueventd.smdk4x12.rc:recovery/root/ueventd.smdk4x12.rc
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -54,8 +55,11 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/vold.fstab:system/etc/vold.fstab
 
 # Bluetooth configuration files
-#PRODUCT_COPY_FILES += \
-    #system/bluetooth/data/main.le.conf:system/etc/bluetooth/main.conf
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/main.conf:system/etc/bluetooth/main.conf \
+    $(COMMON_PATH)/configs/audio.conf:system/etc/bluetooth/audio.conf \
+    $(COMMON_PATH)/configs/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
+    $(COMMON_PATH)/configs/blacklist.conf:system/etc/bluetooth/blacklist.conf
 
 # Wifi
 PRODUCT_COPY_FILES += \
@@ -73,20 +77,13 @@ PRODUCT_COPY_FILES += \
 #PRODUCT_PACKAGES := \
     #audio.a2dp.default \
     #audio.primary.smdk4x12 \
-    #audio.usb.default \
     #camera.exynos4 \
     #Camera \
     #com.android.future.usb.accessory \
     #libsync \
     #lights.exynos4 \
     #macloader \
-    #tinymix \
     #Torch    
-
-# MFC API
-#PRODUCT_PACKAGES += \
-    #libsecmfcdecapi \
-    #libsecmfcencapi
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -94,7 +91,6 @@ PRODUCT_PACKAGES += \
     libSEC_OMX_Resourcemanager \
     libSEC_OMX_Core \
     libOMX.SEC.AVC.Decoder \
-    libOMX.SEC.M2V.Decoder \
     libOMX.SEC.M4V.Decoder \
     libOMX.SEC.WMV.Decoder \
     libOMX.SEC.AVC.Encoder \
@@ -163,29 +159,9 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-# Init files
-PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
-#    $(LOCAL_PATH)/init.smdk4x12.rc:root/init.smdk4x12.rc \
-    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
-    $(LOCAL_PATH)/ueventd.smdk4x12.rc:recovery/root/ueventd.smdk4x12.rc
-
-# Audio
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/configs/tiny_hw.xml:system/etc/sound/m0
-
 # Gps
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps.xml:system/etc/gps.xml
-
-# Camera FW
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/configs/80cfw:system/etc/init.d/80cfw
-
-# Product specific Packages
-#PRODUCT_PACKAGES += \
-    #libsecril-client \
-    #libsecril-client-sap
 
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -196,7 +172,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
 # Device identifier. This must come after all inclusions

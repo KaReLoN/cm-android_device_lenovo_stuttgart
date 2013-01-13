@@ -51,8 +51,8 @@ TARGET_RECOVERY_INITRC := device/lenovo/stuttgart/recovery.rc
 TARGET_SPECIFIC_HEADER_PATH := device/lenovo/stuttgart/overlay/include
 
 # Kernel
-BOARD_KERNEL_CMDLINE := "console=ttySAC3,115200"
-BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_CMDLINE := "console=ttySAC3,115200 androidboot.hardware=smdk4x12"
+BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_PAGESIZE := 2048
 
 # Filesystem
@@ -102,13 +102,13 @@ BOARD_MOBILEDATA_INTERFACE_NAME := "pdp0"
 
 # Wifi
 BOARD_WLAN_DEVICE                := bcmdhd
-BOARD_WLAN_DEVICE_REV            := bcm4334
+BOARD_WLAN_DEVICE_REV            := bcm4330
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_HOSTAPD_DRIVER             := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
-WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/dhd.ko"
+WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/bcmdhd.ko"
 WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA          := "/system/etc/wifi/bcmdhd_sta.bin"
 WIFI_DRIVER_FW_PATH_AP           := "/system/etc/wifi/bcmdhd_apsta.bin"
