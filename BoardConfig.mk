@@ -142,6 +142,7 @@ BOARD_BATTERY_DEVICE_NAME := "battery"
 
 # Kernel
 TARGET_PREBUILT_KERNEL := device/lenovo/stuttgart/zImage
+BOARD_CUSTOM_BOOTIMG_MK := device/lenovo/stuttgart/shbootimg.mk
 
 # assert
 TARGET_OTA_ASSERT_DEVICE := stuttgart,K860

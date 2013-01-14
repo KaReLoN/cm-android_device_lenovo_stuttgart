@@ -1,0 +1,7 @@
+# Android fstab file.
+#<src>      <mnt_point>  <type>  <mnt_flags>            <fs_mgr_flags>
+
+/dev/block/mmcblk0p2 /system    ext4   ro,data=ordered,noauto_da_alloc wait
+/dev/block/mmcblk0p3 /data      ext4   noatime,nosuid,nodev,data=orderd,noatuo_da_alloc,nomblk_io_submit wait
+/dev/block/mmcblk0p5 /cache     ext4   noatime,nosuid,nodev,data=orderd,noatuo_da_alloc,nomblk_io_submit,usedm,discard,nodelalloc wait
+/dev/block/mmcblk0p7 /preload   ext4   noatime,nosuid,nodev,data=orderd,noatuo_da_alloc,nomblk_io_submit wait

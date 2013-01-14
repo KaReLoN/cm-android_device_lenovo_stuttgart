@@ -48,6 +48,7 @@ PRODUCT_COPY_FILES :=
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc
+    $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
 
 # Audio
 PRODUCT_COPY_FILES += \
