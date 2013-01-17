@@ -6,7 +6,7 @@ on init
     export ANDROID_ROOT /system
     export ANDROID_DATA /data
     export EXTERNAL_STORAGE /sdcard
-
+    export ANDROID_BOOTLOGO 1
     mkdir /sdcard
     mkdir /extSdCard
     mkdir /system
