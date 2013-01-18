@@ -47,8 +47,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 PRODUCT_COPY_FILES := 
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc
+    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
     $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/firmware/fimc_is_fw.bin:root/vendor/firmware/fimc_is_fw.bin \
+    $(LOCAL_PATH)/firmware/mfc_fw.bin:root/vendor/firmware/mfc_fw.bin \
+    $(LOCAL_PATH)/firmware/setfile.bin:root/vendor/firmware/setfile.bin \
+    $(LOCAL_PATH)/firmware/setfile_S5K3H7.bin:root/vendor/firmware/setfile_S5K3H7.bin
 
 # Audio
 PRODUCT_COPY_FILES += \
