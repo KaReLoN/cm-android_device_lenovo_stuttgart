@@ -127,7 +127,7 @@ BOARD_HAVE_SAMSUNG_BLUETOOTH := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/s3c-usbgadget/gadget/lun%d/file"
 
 # Recovery
-TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
+BOARD_CUSTOM_GRAPHICS := ../../../device/lenovo/stuttgart/recovery/graphics.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 BOARD_UMS_LUNFILE := "/sys/class/android_usb/android0/f_mass_storage/lun0/file"
 BOARD_USES_MMCUTILS := true
