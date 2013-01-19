@@ -128,7 +128,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/s3c-usbgadget/gadget/l
 
 # Recovery
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/lenovo/stuttgart/recovery/recovery_keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 BOARD_UMS_LUNFILE := "/sys/class/android_usb/android0/f_mass_storage/lun0/file"
 BOARD_USES_MMCUTILS := true
