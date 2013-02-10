@@ -37,24 +37,14 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-# Init files
-#    $(LOCAL_PATH)/init.bt.rc:root/init.bt.rc \
-#    $(LOCAL_PATH)/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
-#    $(LOCAL_PATH)/lpm.rc:root/lpm.rc \
-#    $(LOCAL_PATH)/init.trace.rc:root/init.trace.rc
-#    $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
-#    $(LOCAL_PATH)/init.smdk4x12.rc:root/init.smdk4x12.rc \
 PRODUCT_COPY_FILES := 
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/init.rc:root/init.rc \
+    $(LOCAL_PATH)/init.smdk4x12.rc:root/init.smdk4x12.rc \
+    $(LOCAL_PATH)/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
     $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
     $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/firmware/fimc_is_fw.bin:root/vendor/firmware/fimc_is_fw.bin \
-    $(LOCAL_PATH)/firmware/mfc_fw.bin:root/vendor/firmware/mfc_fw.bin \
-    $(LOCAL_PATH)/firmware/setfile.bin:root/vendor/firmware/setfile.bin \
-    $(LOCAL_PATH)/firmware/setfile_S5K3H7.bin:root/vendor/firmware/setfile_S5K3H7.bin
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -63,13 +53,6 @@ PRODUCT_COPY_FILES += \
 # Vold and Storage
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
-
-# Bluetooth configuration files
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/main.conf:system/etc/bluetooth/main.conf \
-    $(LOCAL_PATH)/configs/audio.conf:system/etc/bluetooth/audio.conf \
-    $(LOCAL_PATH)/configs/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
-    $(LOCAL_PATH)/configs/blacklist.conf:system/etc/bluetooth/blacklist.conf
 
 # Wifi
 PRODUCT_COPY_FILES += \
@@ -84,16 +67,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
 
 # Packages
-#PRODUCT_PACKAGES := \
-    #audio.a2dp.default \
-    #audio.primary.smdk4x12 \
-    #camera.exynos4 \
-    #Camera \
-    #com.android.future.usb.accessory \
-    #libsync \
-    #lights.exynos4 \
-    #macloader \
-    #Torch    
+PRODUCT_PACKAGES := \
+    audio.a2dp.default \
+    Camera \
+    com.android.future.usb.accessory \
+    libsync \
+    tinymix \
+    Torch    
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -108,7 +88,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
+    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/gps.xml:system/etc/gps.xml
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -138,7 +119,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml
+    frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072 \
@@ -167,10 +150,6 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-# Gps
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/gps.xml:system/etc/gps.xml
-
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=Smdk4210RIL \
@@ -178,10 +157,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.hsxpa=1 \
     ro.ril.gprsclass=10
 
-# These are the hardware-specific features
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+$(call inherit-product-if-exists, vendor/lenovo/stuttgart/stuttgart-vendor.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := stuttgart

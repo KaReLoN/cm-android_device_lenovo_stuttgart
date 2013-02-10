@@ -1,0 +1,125 @@
+import init.smdk4x12.usb.rc
+
+on early-init
+    export EXTERNAL_STORAGE /storage/sdcard0
+    export SECONDARY_STORAGE /storage/sdcard1
+    mkdir /storage 0550 system sdcard_r
+    mkdir /storage/sdcard0 0000 system system
+    mkdir /storage/sdcard1 0775 system system
+    mkdir /storage/usbdisk0 0775 system system
+
+    # for backwards compatibility
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard1 /extSdCard
+    symlink /storage/sdcard1 /mnt/extSdCard
+    symlink /storage/usbdisk0 /usbdisk0
+    symlink /storage/usbdisk0 /mnt/usbdisk0
+
+on fs
+    mount_all /fstab.smdk4x12
+    setprop ro.crypto.fuse_sdcard true
+
+on post-fs-data
+    chmod 0666 /dev/snd/pcmC0D0c
+    chmod 0666 /dev/snd/pcmC0D0p
+    chmod 0666 /dev/snd/controlC0
+    chmod 0666 /dev/snd/timer
+    chmod 0666 /dev/snd/hwC0D0
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    setprop wifi.interface wlan0
+    chmod 0664 /sys/class/backlight/pwm-backlight.0/brightness
+    chown system system /sys/class/backlight/pwm-backlight.0/brightness
+    
+on boot
+    chown system input /sys/bus/i2c/devices/7-0039/enable_ps_sensor
+    chown system input /sys/bus/i2c/devices/7-0039/enable_als_sensor
+    chown system input /sys/bus/i2c/devices/7-0039/als_poll_delay
+    chown system input /sys/bus/i2c/devices/7-0039/pilt
+    chown system input /sys/bus/i2c/devices/7-0039/piht
+    chown system input /sys/bus/i2c/devices/7-0039/control
+    chown system input /sys/bus/i2c/devices/7-0039/hwver
+    chown system input /sys/kernel/nvm/psctrl
+    chown system input /sys/kernel/nvm/pscal
+    chown system system /sys/kernel/nvm/wsinfo
+
+    chown system input /sys/class/input/input4/enable
+    chown system input /sys/class/input/input4/delay
+    chown system input /sys/class/input/input4/wake
+    chown system input /sys/class/input/input5/enable
+    chown system input /sys/class/input/input5/delay
+    chown system input /sys/class/input/input5/wake
+    chown compass input /sys/class/input/input6/offsets
+    chown compass input /sys/class/input/input6/dynamic_matrix
+    chown system input /sys/class/input/input7/enable
+    chown system input /sys/class/input/input7/delay
+    chown system input /sys/class/input/input7/wake
+    chmod 0660 /sys/devices/platform/smm_modem/usbctl
+    chown system system /sys/devices/platform/smm_modem/usbctl
+    chown system system /sys/devices/platform/stuttgart-gpio-keypad/disabled_keys
+    chown system system /sys/module/stuttgart_lcd/parameters/ce_control
+    chown root system /sys/devices/system/gpslenovo/regpu
+    chown root system /sys/devices/system/gpslenovo/reset
+    mkdir /data/gps 771 system system
+    chown gps system /data/gps
+
+
+
+service p2p_supplicant /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
+    -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
+    class main
+    disabled
+    oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm --no2bytes \
+    --baudrate 3000000 --patchram /system/bin/bcm4330.hcd /dev/ttySAC0 \
+    --use_baudrate_for_download
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+on init
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chmod 0660 /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /data/misc/bluetoothd/bdaddr_mac
+    chmod 0660 /data/misc/bluetoothd/bdaddr_mac
+    setprop ro.bt.bdaddr_path /data/misc/bluetoothd/bdaddr_mac
+
+#add for gps
+#service gps-demon /system/bin/glgps -c /system/etc/gpsconfig.xml
+#       user root
+#       group root
+#       class main
