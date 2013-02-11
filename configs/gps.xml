@@ -7,9 +7,14 @@
        gpioNStdbyPath="/sys/devices/system/gpslenovo/regpu"
        gpioNResetPath="/sys/devices/system/gpslenovo/reset"
        gpioDelayMs="100"
-       acNvStoDir="/data/"
+       acNvStoDir="/data/gps/"
 
-       acLogDirectory="/sdcard/gps/broadcom/"
+       cLogEnabled="false" 
+       acLogDirectory="/data/gps/log/"
+       gpslogdPipePath="/data/gps/.gpslogd.pipe"
+       ctrlPipe="/data/gps/glgpsctrl"
+
+       acNmeaOutName="/data/gpspipe"
 
        arp-supl-enable="true"
        arp-supl-cap-msb="true"
@@ -26,27 +31,25 @@
        SuplUT3Seconds="20"
        SuplVersion="1"
 
-       LbsEnable="true"
+       LbsEnable="false"
        LbsLocal="false"
-       LbsServer="BCMLS2.glpals.com"
-       LbsPort="7275"
+       LbsServer="lbs.glpals.com"
+       LbsPort="80"
        LbsSyncLto="false"
        SyncLto="true"
        ltoFileName="lto2.dat"
        acLtoDir="/data/gps/"
        LbsSyncLtoThresholdDays="3"
-       LbsTAC="10101222"
-       LbsWlanEnable="false"
 
        IgnoreJniTime="true"
        AssertEnabled="false"
    />
 
   <gll
-       LogPriMask="LOG_INFO"
-       LogFacMask="LOG_GLLAPI | LOG_NMEA | LOG_RAWDATA"
-       FrqPlan="FRQ_PLAN_26MHZ_2PPM_26MHZ_300PPB"
-       RfType="GL_RF_47511_BRCM_EXT_LNA"
+       LogPriMask="LOG_DEBUG"
+       LogFacMask="LOG_GLLAPI | LOG_DEVIA | LOG_NMEA | LOG_RAWDATA | LOG_DEVMS | LOG_ASIC_IO | LOG_BBTEST | LOG_DEVET | LOG_MESM | LOG_DEVKF | LOG_DEVJG | LOG_DEVMR" 
+       FrqPlan="FRQ_PLAN_16_369MHZ_2PPM"
+       RfType="GL_RF_4751_DANUBE_EXT_LNA"
        WarmStandbyTimeout1Seconds="10"
        WarmStandbyTimeout2Seconds="15"
     >

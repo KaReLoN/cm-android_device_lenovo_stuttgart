@@ -132,3 +132,10 @@ service gpsd /system/bin/glgps -c /system/etc/gps.xml
     group system inet sdcard_rw
     socket gps seqpacket 0660 gps system
     class main
+    
+service stmd  /system/bin/stmd
+    class main
+    socket modem-status stream 777 root radio
+    socket clean-up stream 660 radio system
+    user root
+    group radio cache inet misc

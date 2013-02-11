@@ -49,7 +49,8 @@ PRODUCT_COPY_FILES += \
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
+    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
+    $(LOCAL_PATH)/configs/tinyalsa-audio.xml:system/etc/tinyalsa-audio.xml
 
 # Vold and Storage
 PRODUCT_COPY_FILES += \
@@ -69,9 +70,10 @@ PRODUCT_COPY_FILES += \
 
 # Packages
 PRODUCT_PACKAGES += \
+    audio.primary.exynos4 \
     audio.a2dp.default \
-    audio.primary.smdk4x12 \
     audio.usb.default \
+    libaudiohw_legacy \
     Camera \
     com.android.future.usb.accessory \
     libsync \
@@ -140,13 +142,6 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 # if the xhdpi doesn't exist.
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
-
-# RIL
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril_class=Smdk4210RIL \
-    mobiledata.interfaces=pdp0,wlan0,gprs,ppp0 \
-    ro.ril.hsxpa=1 \
-    ro.ril.gprsclass=10
 
 $(call inherit-product-if-exists, vendor/lenovo/stuttgart/stuttgart-vendor.mk)
 
