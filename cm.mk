@@ -14,6 +14,9 @@
 # limitations under the License.
 #
 
+PRODUCT_PACKAGES :=
+PRODUCT_COPY_FILES := 
+
 # Specify phone tech before including full_phone
 $(call inherit-product, vendor/cm/config/gsm.mk)
 
@@ -37,13 +40,11 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-PRODUCT_COPY_FILES := 
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.rc:root/init.rc \
     $(LOCAL_PATH)/init.smdk4x12.rc:root/init.smdk4x12.rc \
     $(LOCAL_PATH)/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
-    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
+    $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.stuttgart.rc \
     $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
 
 # Audio
@@ -67,24 +68,15 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
 
 # Packages
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
     audio.a2dp.default \
+    audio.primary.smdk4x12 \
+    audio.usb.default \
     Camera \
     com.android.future.usb.accessory \
     libsync \
     tinymix \
     Torch    
-
-# OMX
-PRODUCT_PACKAGES += \
-    libstagefrighthw \
-    libSEC_OMX_Resourcemanager \
-    libSEC_OMX_Core \
-    libOMX.SEC.AVC.Decoder \
-    libOMX.SEC.M4V.Decoder \
-    libOMX.SEC.WMV.Decoder \
-    libOMX.SEC.AVC.Encoder \
-    libOMX.SEC.M4V.Encoder
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
@@ -135,10 +127,9 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
-# Include exynos4 platform specific parts
-TARGET_HAL_PATH := hardware/samsung/exynos4/hal
-TARGET_OMX_PATH := hardware/samsung/exynos/multimedia/openmax
-$(call inherit-product, hardware/samsung/exynos4x12.mk)
+# Workaround for hardware/samsung
+TARGET_HAL_PATH := device/lenovo/stuttgart/emptymk
+TARGET_OMX_PATH := device/lenovo/stuttgart/emptymk
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
