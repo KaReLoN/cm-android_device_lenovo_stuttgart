@@ -121,6 +121,11 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    mobiledata.interfaces=ppp,wlan0 \
+    ro.ril.hsxpa=1 \
+    ro.ril.gprsclass=10
+
 $(call inherit-product-if-exists, vendor/lenovo/stuttgart/stuttgart-vendor.mk)
 
 # Device identifier. This must come after all inclusions
