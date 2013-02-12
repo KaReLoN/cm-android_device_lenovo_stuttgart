@@ -47,46 +47,28 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.smdk4x12.rc:root/ueventd.stuttgart.rc \
     $(LOCAL_PATH)/fstab.smdk4x12:root/fstab.smdk4x12 
 
-# Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/configs/tinyalsa-audio.xml:system/etc/tinyalsa-audio.xml
-
-# Vold and Storage
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab
-
-# Wifi
-PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf \
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/gps.xml:system/etc/gps.xml \
+    $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=15
 
-# Gps
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
-
 # Packages
 PRODUCT_PACKAGES += \
-    audio.primary.exynos4 \
     audio.a2dp.default \
     audio.usb.default \
     libaudiohw_legacy \
     Camera \
     com.android.future.usb.accessory \
     libsync \
-    tinymix \
-    Torch    
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/gps.xml:system/etc/gps.xml
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
+    Torch \
     static_busybox \
     make_ext4fs \
     setup_fs
@@ -129,10 +111,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
-# Workaround for hardware/samsung
-TARGET_HAL_PATH := device/lenovo/stuttgart/emptymk
-TARGET_OMX_PATH := device/lenovo/stuttgart/emptymk
-
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
@@ -153,4 +131,4 @@ PRODUCT_MODEL := K860
 PRODUCT_MANUFACTURER := lenovo
 
 # Set build fingerprint / ID / Product Name ect.
-PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=stuttgart TARGET_DEVICE=stuttgart BUILD_FINGERPRINT="Lenovo/stuttgart/stuttgart:4.1.2/JZO54K/K860_1_S_2_002_0343_121226:user/release-keys" PRIVATE_BUILD_DESC="stuttgart-user 4.1.2 JZO54K K860_1_S_2_002_0343_121226 release-keys"
+PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=stuttgart TARGET_DEVICE=stuttgart BUILD_FINGERPRINT="Lenovo/stuttgart/stuttgart:4.1.2/JZO54K/K860_1_S_2_002_0352_130108:user/release-keys" PRIVATE_BUILD_DESC="stuttgart-user 4.1.2 JZO54K K860_1_S_2_002_0352_130108 release-keys"

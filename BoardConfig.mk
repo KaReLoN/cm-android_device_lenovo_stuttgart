@@ -49,8 +49,6 @@ TARGET_PROVIDES_INIT_RC := true
 TARGET_PROVIDES_INIT_TARGET_RC := true
 TARGET_RECOVERY_INITRC := device/lenovo/stuttgart/recovery.rc
 
-TARGET_SPECIFIC_HEADER_PATH := device/lenovo/stuttgart/overlay/include
-
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttySAC3,115200 androidboot.hardware=smdk4x12
 BOARD_KERNEL_BASE := 0x40000000
@@ -76,8 +74,7 @@ COMMON_GLOBAL_CFLAGS += -DSEC_HWJPEG_G2D
 ENABLE_WEBGL := true
 
 # Audio
-BOARD_USE_TINYALSA_AUDIO := true
-BOARD_USE_YAMAHA_MC1N2_AUDIO := true
+COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB
 
 # HWComposer
 BOARD_USES_HWCOMPOSER := true
