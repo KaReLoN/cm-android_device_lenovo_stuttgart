@@ -1,3 +1,4 @@
+/misc           emmc        /dev/block/mmcblk0
 /sdcard         vfat        /dev/block/mmcblk0p1
 /system         ext4        /dev/block/mmcblk0p2
 /data           ext4        /dev/block/mmcblk0p3
