@@ -52,7 +52,7 @@ TARGET_RECOVERY_INITRC := device/lenovo/stuttgart/recovery.rc
 
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttySAC3,115200 androidboot.hardware=smdk4x12
-BOARD_KERNEL_BASE := 0x40000000
+BOARD_KERNEL_BASE := 0x10008000
 BOARD_KERNEL_PAGESIZE := 2048
 
 # Filesystem

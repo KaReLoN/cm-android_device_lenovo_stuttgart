@@ -20,7 +20,7 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES) $(MKIMAG
 	$(call pretty,"Target K860 boot image: $@")
 	$(hide) $(MKIMAGE) -A ARM -O Linux -T ramdisk -C none -a 40800000 -e 40800000 -n ramdisk -d $(INSTALLED_RAMDISK_TARGET) $(INSTALLED_RAMDISK_TARGET).uboot
 	$(hide) $(MKBOOTIMG) --kernel $(INSTALLED_KERNEL_TARGET) --ramdisk $(INSTALLED_RAMDISK_TARGET).uboot $(addprefix --second ,$(INSTALLED_2NDBOOTLOADER_TARGET)) \
-		--cmdline "$(strip $(BOARD_KERNEL_CMDLINE))" --base $(strip $(BOARD_KERNEL_BASE)) --pagesize $(strip $(BOARD_KERNEL_PAGESIZE)) --output $@
+		--cmdline "$(strip $(BOARD_KERNEL_CMDLINE))" --base $(strip $(BOARD_KERNEL_BASE)) --ramdiskaddr 0x11000000 --pagesize $(strip $(BOARD_KERNEL_PAGESIZE)) --output $@
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)
 	@echo -e ${CL_CYN}"Made boot image: $@"${CL_RST}
 
@@ -30,6 +30,6 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(MKIMAGE) \
 	@echo -e ${CL_CYN}"----- Making K860 recovery image ------"${CL_RST}
 	$(MKIMAGE) -A ARM -O Linux -T ramdisk -C none -a 40800000 -e 40800000 -n ramdisk -d $(recovery_ramdisk) $(recovery_ramdisk).uboot
 	$(MKBOOTIMG) --kernel $(recovery_kernel) --ramdisk $(recovery_ramdisk).uboot $(addprefix --second ,$(INSTALLED_2NDBOOTLOADER_TARGET)) \
-		--cmdline "$(strip $(BOARD_KERNEL_CMDLINE))" --base $(strip $(BOARD_KERNEL_BASE)) --pagesize $(strip $(BOARD_KERNEL_PAGESIZE)) --output $@
+		--cmdline "$(strip $(BOARD_KERNEL_CMDLINE))" --base $(strip $(BOARD_KERNEL_BASE)) --ramdiskaddr 0x11000000 --pagesize $(strip $(BOARD_KERNEL_PAGESIZE)) --output $@
 	@echo -e ${CL_CYN}"Made K860 recovery image: $@"${CL_RST}
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
